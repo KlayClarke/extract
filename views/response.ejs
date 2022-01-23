@@ -5,6 +5,15 @@
   <% if(success) { %>
   <h3><%= title %></h3>
   <h6><%= link %></h6>
-  <a href="<%= link  %> " download></a><i class="fas fa-folder"></i>
+  <button>
+    <a href="<%= downloadLink  %> "></a><i class="fas fa-folder"></i>
+  </button>
   <% } %>
 </div>
+<form action="/" method="get" id="to-home">
+  <% if(success) { %>
+  <button class="home">extract again</button>
+  <% } else { %>
+  <button class="home">try again</button>
+  <% } %>
+</form>
