@@ -8,6 +8,12 @@ const path = require("path");
 const axios = require("axios").default;
 const app = express();
 
+const apiHost = process.env.YTMP3APIHOST;
+const apiKey = process.env.YTMP3APIKEY;
+
+console.log(apiHost);
+console.log(apiKey);
+
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -20,20 +26,34 @@ app.get("/", (req, res) => {
 });
 
 app.post("/convert", (req, res) => {
+  const { id } = req.body;
   const options = {
     method: "GET",
     url: "https://youtube-to-mp32.p.rapidapi.com/api/yt_to_mp3",
-    params: { video_id: "edPREMPZ5RA" },
+    params: { video_id: id },
     headers: {
       "x-rapidapi-host": process.env.YTMP3APIHOST,
-      "x-rapidapi-key": process.env.YTMP3APIKEYgit,
+      "x-rapidapi-key": process.env.YTMP3APIKEY,
     },
   };
 
   axios
     .request(options)
     .then(function (response) {
-      console.log(response.data);
+      const { data, status } = response;
+      if (status === 200) {
+        return res.render("response", {
+          success: true,
+          message: "Audio Successfully Extracted",
+          title: data.Title,
+          link: data.Download_url,
+        });
+      } else {
+        return res.render("response", {
+          success: false,
+          message: "Audio Extraction Error - Please Try Again",
+        });
+      }
     })
     .catch(function (error) {
       console.error(error);
