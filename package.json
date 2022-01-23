@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "aws-amplify": "^4.3.12",
     "axios": "^0.25.0",
     "cloudinary": "^1.28.1",
     "cors": "^2.8.5",
