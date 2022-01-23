@@ -32,17 +32,23 @@ app.get("/", async (req, res) => {
   res.render("home");
 });
 
-app.post("/convert", cors(), (req, res) => {
+app.post("/convert", cors(), async (req, res) => {
   const { url, filename } = req.body;
-  try {
-    ytdl(url).pipe(fs.createWriteStream(`${filename}.mp4`));
-    res.render("response", {
-      success: true,
-      message: "Extraction Successful",
-      title: "title",
-      link: "link",
-    });
-  } catch (e) {
+  const isValidUrl = ytdl.validateURL(url);
+  if (isValidUrl) {
+    const info = await ytdl.getBasicInfo(url);
+    const ytconvert = ytdl(url);
+    console.log(info.videoDetails.media);
+    res.download(ytconvert);
+    // .pipe(fs.createWriteStream(`${filename}.mp4`));
+    // res.render("response", {
+    //   success: true,
+    //   message: "Extraction Successful",
+    //   title: filename,
+    //   link: url,
+    //   downloadLink: ytconvert,
+    // });
+  } else {
     res.render("response", {
       success: false,
       message: "Extraction Failed",
