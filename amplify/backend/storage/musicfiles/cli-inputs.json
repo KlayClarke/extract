@@ -1,0 +1,16 @@
+{
+  "resourceName": "musicfiles",
+  "policyUUID": "1b7e7fc3",
+  "bucketName": "extractmusic",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
