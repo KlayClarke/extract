@@ -1,10 +1,11 @@
 <% layout('layouts/boilerplate') %>
 <div class="top-container">
-  <form action="convert" method="post" id="form">
-    <h2><i class="fab fa-youtube"></i> yt to mp3 extraction</h2>
-    <h6>enter video url</h6>
-    <div>
-      <input type="text" name="video-url" placeholder="video url" /><button
+  <form action="/convert" method="post" id="form">
+    <h1 style="font-size: 10vw"><i class="fab fa-youtube"></i></h1>
+    <h2 style="font-size: 4vw">yt to mp3 extraction</h2>
+    <h6 style="font-size: 2vw">enter video url</h6>
+    <div style="width: 20vw">
+      <input type="text" name="id" placeholder="video id here" /><button
         class="convert"
       >
         convert
@@ -12,4 +13,3 @@
     </div>
   </form>
 </div>
-<div class="bottom-container"></div>
