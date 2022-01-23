@@ -8,15 +8,11 @@ const ejsMate = require("ejs-mate");
 const cloudinary = require("cloudinary").v2;
 const cors = require("cors");
 const path = require("path");
-// const axios = require("axios").default;
 const ytdl = require("ytdl-core");
 const ffmpeg = require("ffmpeg");
-// const { url } = require("inspector");
-// const { format } = require("path");
-// const { json } = require("express/lib/response");
 const app = express();
 
-app.use(cors());
+// app.use(cors());
 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
@@ -32,11 +28,27 @@ cloudinary.config({
   secure: true,
 });
 
-app.get("/", cors(), async (req, res) => {
+app.get("/", async (req, res) => {
   res.render("home");
 });
 
-app.post("/convert", cors(), (req, res) => {});
+app.post("/convert", cors(), (req, res) => {
+  const { url, filename } = req.body;
+  try {
+    ytdl(url).pipe(fs.createWriteStream(`${filename}.mp4`));
+    res.render("response", {
+      success: true,
+      message: "Extraction Successful",
+      title: "title",
+      link: "link",
+    });
+  } catch (e) {
+    res.render("response", {
+      success: false,
+      message: "Extraction Failed",
+    });
+  }
+});
 
 app.listen(3000, () => {
   console.log("Serving on Port 3000");
